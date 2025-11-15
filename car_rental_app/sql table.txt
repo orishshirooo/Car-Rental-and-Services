@@ -1,0 +1,48 @@
+CREATE TABLE categories (
+  id VARCHAR(10) PRIMARY KEY,
+  name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE cars (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  category_id VARCHAR(10),
+  name VARCHAR(100) NOT NULL UNIQUE,
+  price_per_day DECIMAL(10, 2) NOT NULL,
+  is_available BOOLEAN DEFAULT 1,
+  FOREIGN KEY (category_id) REFERENCES categories(id)
+);
+
+CREATE TABLE users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  password_hash VARCHAR(256) NOT NULL
+);
+
+CREATE TABLE services (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL UNIQUE,
+  price DECIMAL(10, 2) NOT NULL,
+  is_daily BOOLEAN NOT NULL
+);
+
+CREATE TABLE transactions (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT,
+  timestamp DATETIME,
+  user_name VARCHAR(100),
+  user_email VARCHAR(100),
+  car_model VARCHAR(100),
+  duration INT,
+  services_used TEXT,
+  final_total DECIMAL(10, 2),
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE messages (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  timestamp DATETIME,
+  user_name VARCHAR(100),
+  user_email VARCHAR(100),
+  message_text TEXT
+);
